@@ -3,8 +3,8 @@
 // convert component's state to prop,
 // convert component's dispatch to prop
 
-import AddTask from '../components/addTask';
-import {addNewTask} from '../actions';
+import AddTask from '../addTask';
+import {addNewTask} from '../../../reducers/actions';
 import {connect} from 'react-redux';
 
 const mapStateToProps = state => {

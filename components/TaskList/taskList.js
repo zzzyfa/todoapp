@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, FlatList, View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import TaskItemContainer from '../containers/taskItemContainer';
+import TaskItemContainer from '../TaskItem/container/taskItemContainer';
+
 
 export default class TaskList extends Component {
     render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AppRegistry, View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { addNewTask } from '../actions';
+import { addNewTask } from '../../reducers/actions';
 
 export default class AddTask extends Component {
     constructor(props) {
