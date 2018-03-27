@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { AppRegistry, View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { addNewTask } from '../../reducers/actions';
+import { AppRegistry, View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { addNewTask } from '../../reducers/actions/index';
+import {connect} from 'react-redux';
+import store from '../../index';
 
-export default class AddTask extends Component {
+export class AddTask extends Component {
     constructor(props) {
         super(props);
         this.state = ({
@@ -13,25 +15,33 @@ export default class AddTask extends Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <View>
-                    <TextInput onChangeText={(text) => {
+                    <TextInput placeholder='Enter task name' style={styles.inputtext} onChangeText={(text) => {
                         this.setState({ newTaskName: text })
                     }} />
-                </View>
-                <View>
-                    <TouchableOpacity
+                
+                    <TouchableOpacity style={styles.addbutton} 
                         onPress={(event) => {
-                            if (!this.state.newTaskName.trim()) {
-                                return; //if it is blank then return nothing
-                            }
-                            //call click event using container here
+
+                            // store.dispatch({type: ADD_TODO, taskName: 'Test'})
+                            // if (!this.state.newTaskName.trim()) {
+                            //     return; //if it is blank then return nothing
+                            // }
+                            // //call click event using container here
                             this.props.onClickAdd(this.state.newTaskName);
-                            //pass the newTaskName as value for prop onClickAdd which
-                            //is in addContainer that dispatches Add action
+                            
+                            // //pass the newTaskName as value for prop onClickAdd which
+                            // //is in addContainer that dispatches Add action
                         }}
                     >
-
+                        
+                    {/* <Text style={{color: 'white'}}>Add Item</Text> */}
+                    <Image
+                        style={{ width: 100, height: 40 }}
+                        source={require('../../icons/add-button-png-hi.png')}
+                        resizeMode='stretch'
+                    />
                     </TouchableOpacity>
 
                 </View>
@@ -39,3 +49,57 @@ export default class AddTask extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        //new prop onClickAdd, addTask component will pass prop to this
+        onClickAdd: (inputTaskName) => {
+            dispatch(addNewTask(inputTaskName)); //dispatch action addNewTask and pass it prop inputTaskName
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTask);
+
+
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 0.3,
+      backgroundColor: 'navy',
+      alignItems: 'center',
+      justifyContent: 'center',
+      
+                
+               
+    },
+    inputtext:{
+        backgroundColor: 'white',
+        width: 300,
+        height:40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        borderColor: 'grey',
+        borderWidth: 1,
+
+    },
+    addbutton:{
+        
+        marginTop:20,
+        
+        height: 40,
+        width: 100,
+        //backgroundColor: 'grey',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 100,
+ 
+    }
+  });

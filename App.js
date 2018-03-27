@@ -10,21 +10,48 @@
 //   }
 // }
 
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
+// import { AppRegistry } from 'react-native';
+// import { createStore } from 'redux';
+// import { Provider } from 'react-redux';
+import allReducers from './reducers/allReducers';
+// import taskReducers from './reducers/taskReducers';
+// import TaskManager from './components/taskManager';
+// //import AddTask from './components/addTask';
+
+
+
+import React from 'react';
+import AddTask from './components/AddTask/addTask';
 import { AppRegistry } from 'react-native';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-// import allReducers from './reducers/index';
 import taskReducers from './reducers/taskReducers';
+import TaskListContainer from './components/TaskList/taskList';
+import store from './index';
 import TaskManager from './components/taskManager';
-//import AddTask from './components/addTask';
 
-let store = createStore(taskReducers);
-const App = () => (
-    <Provider store={store}>
-        <TaskManager />
-        {/* calls containers which are mapped to views */}
-    </Provider>
-)
+// let store = createStore(taskReducers);
+// const App = () => (
+//     <Provider store={store}>
+//         <AddTask />
+//     </Provider>
+// )
 
-AppRegistry.registerComponent('todoapp', () => App);
+// AppRegistry.registerComponent('todoapp', () => App);
+//  const store = createStore(allReducers);
+console.log ('no', store.getState());
+export default class App extends React.Component {
+
+    render() {
+        
+        return (
+            <Provider store={store}>
+                {/* <AddTask /> */}
+                {/* <TaskListContainer /> */}
+                <TaskManager />
+            </Provider>
+
+        );
+    }
+}
