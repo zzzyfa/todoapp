@@ -1,7 +1,7 @@
 //root component to manage all containers
 
 import React, { Component } from 'react';
-import { AppRegistry, View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { AppRegistry, View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 //import addContainer from '../containers/addContainer';
 //import taskListContainer from '../containers/taskListContainer';
 import AddTask from './AddTask/addTask';
@@ -14,7 +14,9 @@ export default class TaskManager extends Component {
         return (
             <View style = {{flex:1}}>
                 <AddTask />
+                <ScrollView>
                 <TaskListContainer />
+                </ScrollView>
             </View>
         )
     }

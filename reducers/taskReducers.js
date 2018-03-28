@@ -25,20 +25,32 @@ const taskReducers = (state = [], action) => {
             )
         case DELETE_TODO:
             console.log('del');
-            return state.map(task =>
-                (task.taskName === action.taskName) ? { ...task.splice } : task
-            )
+
+            const newState = Object.assign([], state);
+            const indexOfTaskToDelete = state.findIndex(task => {
+                return task.taskId == action.taskId
+            })
+            newState.splice(indexOfTaskToDelete, 1);
+            return newState;
+
+            // return state.map(task =>
+            //     (task.taskName === action.taskName) ? { ...task.slice } : task
+            // )
+
+
         default:
             console.log('3');
             return state; //state doesnt change
     }
 }
 
-// deleteItem(key){
-//     this.state.state.splice(taskName);
-//     this.setState({state: this.state.state})
-//     }
 
-
+// const newState = Object.assign([], state);
+// const indexOfCatToDelete = state.findIndex(cat => {
+//   return cat.id == action.cat.id
+// })
+// newState.splice(indexOfCatToDelete, 1);
+// browserHistory.push('/cats');
+// return newState;
 
 export default taskReducers;

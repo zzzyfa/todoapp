@@ -38,8 +38,8 @@ export class AddTask extends Component {
                         
                     {/* <Text style={{color: 'white'}}>Add Item</Text> */}
                     <Image
-                        style={{ width: 100, height: 40 }}
-                        source={require('../../icons/add-button-png-hi.png')}
+                        style={{ width: 100, height: 35 }}
+                        source={require('../../icons/add-button-blue-hi.png')}
                         resizeMode='stretch'
                     />
                     </TouchableOpacity>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     addbutton:{
         
-        marginTop:20,
+        marginTop:15,
         
         height: 40,
         width: 100,

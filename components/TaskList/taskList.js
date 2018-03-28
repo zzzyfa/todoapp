@@ -10,7 +10,11 @@ export class TaskList extends Component {
         super(props);
     }
     render() {
-        const dummy = [1, 2, 3];
+        // <tbody>
+        //     {rows.map((row) => {
+        //         return <ObjectRow key={row.uniqueId} />;
+        //     })}
+        // </tbody>
         console.log('hey 12', this.props.tasks, store.getState() );
 
         return (

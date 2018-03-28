@@ -21,12 +21,12 @@ export const toggleTask = (taskId) => {
     }
 }
 
-export const deleteTask = (inputTaskName) => {
+export const deleteTask = (taskId) => {
    console.log("Im in deleteTask");
     return{
         type: DELETE_TODO,
-        //taskId: taskId,
-        taskName: inputTaskName,
+        taskId: taskId,
+        //taskName: inputTaskName,
 
     }
 }
