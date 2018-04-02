@@ -4,24 +4,23 @@ import { AppRegistry, FlatList, View, Text, TextInput, StyleSheet, TouchableOpac
 import { connect } from 'react-redux';
 import store from '../../index';
 import TaskItemContainer from '../TaskItem/taskItem';
+import SortableListView from 'react-native-sortable-listview';
+
+
 
 export class TaskList extends Component {
     constructor(props) {
         super(props);
     }
+
     render() {
-        // <tbody>
-        //     {rows.map((row) => {
-        //         return <ObjectRow key={row.uniqueId} />;
-        //     })}
-        // </tbody>
-        console.log('hey 12', this.props.tasks, store.getState() );
+        console.log('im in tasklist', this.props.tasks, store.getState() );
 
         return (
                <FlatList data={this.props.tasks}
                renderItem={({item, index}) => {
                    return(
-                    // how do we add ItemComponent which contains action? use container
+                    
                     <TaskItemContainer {...item}>
 
                     </TaskItemContainer>
@@ -36,9 +35,24 @@ export class TaskList extends Component {
 }
 
 
+const getVisibleTodos = (todos, filter) => {
+    switch (filter) {
+      case 'SHOW_ALL':
+        return todos
+      case 'SHOW_COMPLETED':
+        return todos.filter(t => t.completed)
+      case 'SHOW_ACTIVE':
+        return todos.filter(t => !t.completed)
+      default:
+      return todos  
+      //throw new Error('Unknown filter: ' + filter)
+    }
+  }
+
 const mapStateToProps = (state) => {
     return {
-        tasks: !state.taskReducers ? [] : state.taskReducers
+        tasks: !state.taskReducers ? [] : state.taskReducers,
+        todos: getVisibleTodos(state.taskReducers, state.visibilityFilterReducer)
     }
 };
 

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import taskReducers from './taskReducers';
+import visibilityFilterReducer from './visibilityFilterReducer';
 
+console.log('im in allreducers')
 const allReducers = combineReducers({
     taskReducers,
-    //you can add more reducers here, separated by , !
+    // visibilityFilterReducer
 });
 export default allReducers;

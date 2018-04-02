@@ -8,7 +8,7 @@ export class AddTask extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            newTaskName: ''
+            newTaskName: '',
         })
 
     }
@@ -17,26 +17,25 @@ export class AddTask extends Component {
         return (
             <View style={styles.container}>
                 <View>
-                    <TextInput placeholder='Enter task name' style={styles.inputtext} onChangeText={(text) => {
+                    <TextInput value = {this.state.newTaskName} placeholder='Enter task name' style={styles.inputtext} onChangeText={(text) => {
                         this.setState({ newTaskName: text })
                     }} />
                 
                     <TouchableOpacity style={styles.addbutton} 
                         onPress={(event) => {
 
-                            // store.dispatch({type: ADD_TODO, taskName: 'Test'})
-                            // if (!this.state.newTaskName.trim()) {
-                            //     return; //if it is blank then return nothing
-                            // }
-                            // //call click event using container here
-                            this.props.onClickAdd(this.state.newTaskName);
+                           
+                            if (!this.state.newTaskName.trim()) {
+                                return; 
+                            }
                             
-                            // //pass the newTaskName as value for prop onClickAdd which
-                            // //is in addContainer that dispatches Add action
+                            this.props.onClickAdd(this.state.newTaskName), this.setState({newTaskName:''})
+                            
+                            
                         }}
                     >
                         
-                    {/* <Text style={{color: 'white'}}>Add Item</Text> */}
+     
                     <Image
                         style={{ width: 100, height: 35 }}
                         source={require('../../icons/add-button-blue-hi.png')}
@@ -57,8 +56,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
+    console.log('im in add dispatch')
     return{
         //new prop onClickAdd, addTask component will pass prop to this
+        
         onClickAdd: (inputTaskName) => {
             dispatch(addNewTask(inputTaskName)); //dispatch action addNewTask and pass it prop inputTaskName
         }

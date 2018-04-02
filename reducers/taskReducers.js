@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO, DELETE_TODO } from './actions/actionTypes';
+import { ADD_TODO, TOGGLE_TODO, DELETE_TODO, EDIT_TODO } from './actions/actionTypes';
 const initState = {
     taskId: 0,
     taskName: 'test',
@@ -37,12 +37,24 @@ const taskReducers = (state = [], action) => {
             //     (task.taskName === action.taskName) ? { ...task.slice } : task
             // )
 
+        case EDIT_TODO:
+            console.log('edit reducer');
+            return state.map(task =>
+                (task.taskId === action.taskId) ? { ...task, 
+                   taskName: action.taskName 
+                   
+                } : task
+            )
+
 
         default:
             console.log('3');
             return state; //state doesnt change
     }
 }
+
+
+
 
 
 // const newState = Object.assign([], state);
