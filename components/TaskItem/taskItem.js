@@ -10,9 +10,6 @@ export class TaskItem extends Component {
         super(props);
     }
 
-
-
-
     state = { toggle: false, isEdit: false,  newTaskName: '', }
     onEdit() {
         const newEditState = !this.state.isEdit;

@@ -9,6 +9,8 @@ const taskReducers = (state = [], action) => {
     switch (action.type) {
         case ADD_TODO:
             console.log('1');
+            let index = state.findIndex(el => el.taskName == action.taskName);
+            if(index == -1)  
             return [
                 ...state,
                 {
@@ -17,6 +19,8 @@ const taskReducers = (state = [], action) => {
                     completed: false,
                 }
             ];
+            alert('This task exists');
+          
         case TOGGLE_TODO:
             console.log('2');
             //iterate the tasks array, find match, clone to new object, then change

@@ -16,7 +16,7 @@ export default class TaskManager extends Component {
         return (
             <View style={{ flex: 1}}>
             
-                <AddTask />
+                <AddTask  />
                 <ScrollView>
                     <TaskListContainer />
                 </ScrollView>

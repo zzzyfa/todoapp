@@ -3,6 +3,7 @@ import { AppRegistry, View, Text, TextInput, StyleSheet, TouchableOpacity, Image
 import { addNewTask } from '../../reducers/actions/index';
 import {connect} from 'react-redux';
 import store from '../../index';
+import taskReducers from '../../reducers/taskReducers';
 
 export class AddTask extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ export class AddTask extends Component {
         })
 
     }
+
 
     render() {
         return (
@@ -26,7 +28,7 @@ export class AddTask extends Component {
 
                            
                             if (!this.state.newTaskName.trim()) {
-                                return; 
+                                return alert('Please enter a task'); 
                             }
                             
                             this.props.onClickAdd(this.state.newTaskName), this.setState({newTaskName:''})

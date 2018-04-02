@@ -5,6 +5,6 @@ import visibilityFilterReducer from './visibilityFilterReducer';
 console.log('im in allreducers')
 const allReducers = combineReducers({
     taskReducers,
-    // visibilityFilterReducer
+    //visibilityFilterReducer
 });
 export default allReducers;

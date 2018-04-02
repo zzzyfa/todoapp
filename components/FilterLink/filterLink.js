@@ -7,50 +7,52 @@ import TaskItemContainer from '../TaskItem/taskItem';
 import { SET_VISIBILITY_FILTER } from '../../reducers/actions/actionTypes';
 import { VisibilityFilters, setVisibilityFilter } from '../../reducers/actions/index';
 
+state={all: 'SHOW_ALL', completed: 'SHOW_COMPLETED', active: 'SHOW_ACTIVE'}
 
-export default class FilterLink extends Component {
+export class FilterLink extends Component {
     render() {
         return (
             <View style={{ backgroundColor: 'navy', marginBottom: 50, flexDirection: 'row' }}>
                 <Text style={{ color: 'white' }}>Show:</Text>
-                <Link filter={VisibilityFilters.SHOW_ALL}><Text style={{ color: 'white' }}>All</Text></Link>
-                <Link filter={VisibilityFilters.SHOW_ACTIVE}><Text style={{ color: 'white' }}>Active</Text></Link>
-                <Link filter={VisibilityFilters.SHOW_COMPLETED}><Text style={{ color: 'white' }}>Completed</Text></Link>
+
+                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_ALL') }} style={{ marginLeft: 4 }}>
+                    <Text style={{ color: 'white' }}>All</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_ACTIVE') }} style={{ marginLeft: 4 }}>
+                    <Text style={{ color: 'white' }}>Active</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_COMPLETED') }} style={{ marginLeft: 4 }}>
+                    <Text style={{ color: 'white' }}>Completed</Text>
+                </TouchableOpacity>
+
             </View>
         )
     }
 }
 
-const Link = ({ active, children, onClick }) => (
-    console.log('Im in Link'),
-    <TouchableOpacity
-        onPress={(event) => {this.props.onClick}}
-        disabled={active}
-        style={{
-            marginLeft: 4,
-        }}
-    >
-        {children}
-    </TouchableOpacity>
-)
 
-// Link.propTypes = {
-//     active: PropTypes.bool.isRequired,
-//     children: PropTypes.node.isRequired,
-//     onClick: PropTypes.func.isRequired
-//   }
+// const mapStateToProps = (filter) => ({
 
-const mapStateToProps = (state, ownProps) => ({
-    
-    active: ownProps.filter === state.visibilityFilterReducer
-})
+//     active: ownProps.filter === state.visibilityFilterReducer
+// })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    
-    onClick: () => dispatch(setVisibilityFilter(ownProps.filter))
-})
+const mapStateToProps = state => {
+    return {
 
-connect(mapStateToProps, mapDispatchToProps)(Link)
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onClick: (filter) => {
+            dispatch(setVisibilityFilter(filter));
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(FilterLink)
 
 
 
