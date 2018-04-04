@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO, DELETE_TODO, EDIT_TODO } from './actions/actionTypes';
+import { ADD_TODO, TOGGLE_TODO, DELETE_TODO, EDIT_TODO, SET_VISIBILITY_FILTER } from './actions/actionTypes';
 const initState = {
     taskId: 0,
     taskName: 'test',
@@ -10,20 +10,19 @@ const taskReducers = (state = [], action) => {
         case ADD_TODO:
             console.log('1');
             let index = state.findIndex(el => el.taskName == action.taskName);
-            if(index == -1)  
-            return [
-                ...state,
-                {
-                    taskId: action.taskId,
-                    taskName: action.taskName,
-                    completed: false,
-                }
-            ];
+            if (index == -1)
+                return [
+                    ...state,
+                    {
+                        taskId: action.taskId,
+                        taskName: action.taskName,
+                        completed: false,
+                    }
+                ];
             alert('This task exists');
-          
+
         case TOGGLE_TODO:
             console.log('2');
-            //iterate the tasks array, find match, clone to new object, then change
             return state.map(task =>
                 (task.taskId === action.taskId) ? { ...task, completed: !task.completed } : task
             )
@@ -37,19 +36,15 @@ const taskReducers = (state = [], action) => {
             newState.splice(indexOfTaskToDelete, 1);
             return newState;
 
-            // return state.map(task =>
-            //     (task.taskName === action.taskName) ? { ...task.slice } : task
-            // )
-
         case EDIT_TODO:
             console.log('edit reducer');
             return state.map(task =>
-                (task.taskId === action.taskId) ? { ...task, 
-                   taskName: action.taskName 
-                   
+                (task.taskId === action.taskId) ? {
+                    ...task,
+                    taskName: action.taskName
+
                 } : task
             )
-
 
         default:
             console.log('3');
@@ -57,16 +52,5 @@ const taskReducers = (state = [], action) => {
     }
 }
 
-
-
-
-
-// const newState = Object.assign([], state);
-// const indexOfCatToDelete = state.findIndex(cat => {
-//   return cat.id == action.cat.id
-// })
-// newState.splice(indexOfCatToDelete, 1);
-// browserHistory.push('/cats');
-// return newState;
 
 export default taskReducers;

@@ -1,42 +1,47 @@
 import React, { Component, PropTypes } from 'react';
 import { AppRegistry, FlatList, View, Text, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
-//import TaskItemContainer from '../TaskItem/container/taskItemContainer';
 import { connect } from 'react-redux';
 import store from '../../index';
 import TaskItemContainer from '../TaskItem/taskItem';
 import { SET_VISIBILITY_FILTER } from '../../reducers/actions/actionTypes';
 import { VisibilityFilters, setVisibilityFilter } from '../../reducers/actions/index';
 
-state={all: 'SHOW_ALL', completed: 'SHOW_COMPLETED', active: 'SHOW_ACTIVE'}
+
 
 export class FilterLink extends Component {
+    state={toggle: 'SHOW_ALL'}
+    _onPress(filterName) {
+        const newToggleState = filterName;
+        this.setState({ toggle: newToggleState });
+    }
+
+
+
     render() {
+        
         return (
-            <View style={{ backgroundColor: 'navy', marginBottom: 50, flexDirection: 'row' }}>
+            <View style={styles.linkView}>
                 <Text style={{ color: 'white' }}>Show:</Text>
 
-                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_ALL') }} style={{ marginLeft: 4 }}>
-                    <Text style={{ color: 'white' }}>All</Text>
+                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_ALL'), this._onPress('SHOW_ALL') }} 
+                style={this.state.toggle == 'SHOW_ALL' ? styles.indiLinkActive : styles.indiLink}>
+                    <Text style={this.state.toggle == 'SHOW_ALL' ? styles.linkTextActive : styles.linkText}>All</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_ACTIVE') }} style={{ marginLeft: 4 }}>
-                    <Text style={{ color: 'white' }}>Active</Text>
+                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_ACTIVE'), this._onPress('SHOW_ACTIVE') }} 
+                style={this.state.toggle == 'SHOW_ACTIVE' ? styles.indiLinkActive : styles.indiLink}>
+                    <Text style={this.state.toggle == 'SHOW_ACTIVE' ? styles.linkTextActive : styles.linkText}>Active</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_COMPLETED') }} style={{ marginLeft: 4 }}>
-                    <Text style={{ color: 'white' }}>Completed</Text>
+                <TouchableOpacity onPress={(event) => { this.props.onClick('SHOW_COMPLETED'), this._onPress('SHOW_COMPLETED') }} 
+                style={this.state.toggle == 'SHOW_COMPLETED' ? styles.indiLinkActive : styles.indiLink}>
+                    <Text style={this.state.toggle == 'SHOW_COMPLETED' ? styles.linkTextActive : styles.linkText}>Completed</Text>
                 </TouchableOpacity>
 
             </View>
         )
     }
 }
-
-
-// const mapStateToProps = (filter) => ({
-
-//     active: ownProps.filter === state.visibilityFilterReducer
-// })
 
 const mapStateToProps = state => {
     return {
@@ -45,7 +50,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
+    console.log('dispatch onClick')
     return {
+        
         onClick: (filter) => {
             dispatch(setVisibilityFilter(filter));
         }
@@ -54,37 +61,49 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps,mapDispatchToProps)(FilterLink)
 
+const styles = StyleSheet.create({
+    linkView:{
+        backgroundColor: 'navy', 
+
+        flexDirection: 'row', 
+        height: 50,
+        justifyContent: 'center',
+        alignItems:'center'
+    },
+
+    
+    indiLinkActive: {
+        marginLeft: 10,
+        width: 90,
+        height: 25,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems:'center',
+        borderRadius: 30,
+        //borderColor: 'green'
+    },
+    indiLink: {
+        marginLeft: 10,
+        width: 90,
+        height: 20,
+        backgroundColor: '#C0C0C0',
+        justifyContent: 'center',
+        alignItems:'center',
+        borderRadius: 30,
+       // borderColor: 'green'
+    },
 
 
+    linkTextActive: {
+        color: 'navy',
+        fontWeight: 'bold',
+        justifyContent: 'center',
+        alignItems:'center'
+    },
+    linkText: {
+        color: 'white',
+        justifyContent: 'center',
+        alignItems:'center'
+    },
 
-
-// export default FilterLink = ({filter, //link
-//                 children //contents of the link
-//             }) => {
-//     return (
-//         <View>
-//             <TouchableOpacity onPress = {(event) => {
-//                 store.dispatch({type: SET_VISIBILITY_FILTER, filter})
-//             }}>
-//                 <Text>{children}</Text>
-//             </TouchableOpacity>
-//         </View>
-//     )
-// }
-
-// const mapStateToProps = state => {
-//     return {
-
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return{
-//         //new prop onClickAdd, addTask component will pass prop to this
-//         onClickFilter: (inputTaskName) => {
-//             dispatch(addNewTask(inputTaskName)); //dispatch action addNewTask and pass it prop inputTaskName
-//         }
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(AddTask);
+})

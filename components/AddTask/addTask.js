@@ -45,7 +45,9 @@ export class AddTask extends Component {
                     />
                     </TouchableOpacity>
 
+
                 </View>
+                
             </View>
         )
     }

@@ -10,20 +10,15 @@ export class TaskItem extends Component {
         super(props);
     }
 
-    state = { toggle: false, isEdit: false,  newTaskName: '', }
+    state = { isEdit: false,  newTaskName: '',}
     onEdit() {
         const newEditState = !this.state.isEdit;
         this.setState({ isEdit: newEditState })
     }
-    _onPress() {
-        const newToggleState = !this.state.toggle;
-        this.setState({ toggle: newToggleState })
-    }
+   
     render() {
-        const { toggle, isEdit } = this.state;
-        const textValue = toggle ? "Done" : "Pending";
-        const buttonBg = toggle ? 'green' : 'white';
-        const textColor = toggle ? 'white' : 'black';
+        const { isEdit } = this.state;
+        const textValue = this.props.completed == true ? 'Done' : 'Pending'
 
         return (
             this.state.isEdit ? (
@@ -31,10 +26,11 @@ export class TaskItem extends Component {
                 <View style={styles.itemStyle}>
 
 
-                    <TouchableOpacity onPress={(event) => { this.props.onClickToggle(this.props.taskId), this._onPress() }}
-                        style={[styles.toggleButton, { backgroundColor: buttonBg, borderColor: 'green', borderWidth: 2, borderRadius: 30 }]}
+                    <TouchableOpacity onPress={(event) => { this.props.onClickToggle(this.props.taskId) }}
+                        style={[styles.toggleButton, { backgroundColor: this.props.completed == true ? 'green' : 'white',
+                         borderColor: 'green', borderWidth: 2, borderRadius: 30 }]}
                     >
-                        <Text style={[styles.textButton, { color: textColor }]}>{textValue}</Text>
+                        <Text style={[styles.textButton, { color: this.props.completed == true ? 'white' : 'black' }]}>{textValue}</Text>
                     </TouchableOpacity>
 
 
@@ -79,10 +75,12 @@ export class TaskItem extends Component {
 
                 : (<View style={styles.itemStyle}>
 
-                    <TouchableOpacity onPress={(event) => { this.props.onClickToggle(this.props.taskId), this._onPress() }}
-                        style={[styles.toggleButton, { backgroundColor: buttonBg, borderColor: 'green', borderWidth: 2, borderRadius: 30 }]}
+                    <TouchableOpacity onPress={(event) => { this.props.onClickToggle(this.props.taskId) }}
+                        style={[styles.toggleButton, 
+                            { backgroundColor: this.props.completed == true ? 'green' : 'white',
+                                borderColor: 'green', borderWidth: 2, borderRadius: 30 }]}
                     >
-                        <Text style={[styles.textButton, { color: textColor }]}>{textValue}</Text>
+                        <Text style={[styles.textButton, { color: this.props.completed == true ? 'white' : 'black' }]}>{textValue}</Text>
                     </TouchableOpacity>
 
 

@@ -17,18 +17,16 @@ export class TaskList extends Component {
         console.log('im in tasklist', this.props.tasks, store.getState() );
 
         return (
-               <FlatList data={this.props.tasks}
+               <FlatList 
+             data={this.props.todos}
                renderItem={({item, index}) => {
                    return(
-                    
-                    <TaskItemContainer {...item}>
+                     <TaskItemContainer {...item}>
 
-                    </TaskItemContainer>
-
-                   )
+                        </TaskItemContainer>)
+                   
                }}
-               keyExtractor={(item, index) => item.taskName}>
-
+               keyExtractor={(item, index) => index}>
                    </FlatList>
         )
     }
@@ -45,14 +43,13 @@ const getVisibleTodos = (todos, filter) => {
         return todos.filter(t => !t.completed)
       default:
       return todos  
-      //throw new Error('Unknown filter: ' + filter)
     }
   }
 
 const mapStateToProps = (state) => {
     return {
         tasks: !state.taskReducers ? [] : state.taskReducers,
-        todos: getVisibleTodos(state.taskReducers, state.visibilityFilterReducer)
+        todos: getVisibleTodos(state.taskReducers, state.visibilityFilterReducer.filter)
     }
 };
 
