@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, FlatList, View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import store from '../../index';
-import { deleteTask, toggleTask,editTask } from '../../reducers/actions/index'
+import { deleteTask, toggleTask, editTask } from '../../reducers/actions/index'
 
 //to show information of each task
 export class TaskItem extends Component {
@@ -10,12 +10,31 @@ export class TaskItem extends Component {
         super(props);
     }
 
-    state = { isEdit: false,  newTaskName: '',}
+    state = { isEdit: false, newTaskName: '',  }
     onEdit() {
         const newEditState = !this.state.isEdit;
         this.setState({ isEdit: newEditState })
     }
-   
+    
+    _renderEdit() {
+        if (this.props.completed == false) {
+            return (
+                <TouchableOpacity  onPress={(event) => { console.log('i clicked edit'), this.onEdit() }}
+                    style={styles.editButton} >
+                    <Image
+                        style={{ width: 35, height: 30 }}
+                        source={this.state.isEdit ? require('../../icons/save.png') : require('../../icons/edit.png')}
+                        resizeMode='stretch'
+                    />
+                </TouchableOpacity>
+            )
+        } else {
+            return null
+        }
+    }
+
+
+
     render() {
         const { isEdit } = this.state;
         const textValue = this.props.completed == true ? 'Done' : 'Pending'
@@ -27,10 +46,10 @@ export class TaskItem extends Component {
 
 
                     <TouchableOpacity onPress={(event) => { this.props.onClickToggle(this.props.taskId) }}
-                        style={[styles.toggleButton, { backgroundColor: this.props.completed == true ? 'green' : 'white',
-                         borderColor: 'green', borderWidth: 2, borderRadius: 30 }]}
+                        style={[styles.toggleButton, { backgroundColor: this.props.completed == true ? 'green' : 'white', }]}
                     >
-                        <Text style={[styles.textButton, { color: this.props.completed == true ? 'white' : 'black' }]}>{textValue}</Text>
+                        <Text style={[styles.textButton, { color: this.props.completed == true ? 'white' : 'black' }]}>
+                            {textValue}</Text>
                     </TouchableOpacity>
 
 
@@ -40,18 +59,20 @@ export class TaskItem extends Component {
                         color: this.props.completed == true ? 'darkgreen' : 'black',
                         borderBottomColor: 'black'
                     }]} placeholder={this.props.taskName}
-                    onChangeText={(text) => {
-                        this.setState({ newTaskName: text })
-                    }} 
+                        onChangeText={(text) => {
+                            this.setState({ newTaskName: text })
+                        }}
                     >
                     </TextInput>
 
 
 
-                    <TouchableOpacity onPress={(event) => { console.log('i clicked edit'), 
-                    this.props.onClickSave(this.props.taskId, this.state.newTaskName), this.onEdit()  }}
-                        style={styles.editButton}  
-                        >
+                    <TouchableOpacity onPress={(event) => {
+                        console.log('i clicked edit'),
+                        this.props.onClickSave(this.props.taskId, this.state.newTaskName), this.onEdit()
+                    }}
+                        style={styles.editButton}
+                    >
                         <Image
                             style={{ width: 35, height: 30 }}
                             source={isEdit ? require('../../icons/save.png') : require('../../icons/edit.png')}
@@ -76,9 +97,8 @@ export class TaskItem extends Component {
                 : (<View style={styles.itemStyle}>
 
                     <TouchableOpacity onPress={(event) => { this.props.onClickToggle(this.props.taskId) }}
-                        style={[styles.toggleButton, 
-                            { backgroundColor: this.props.completed == true ? 'green' : 'white',
-                                borderColor: 'green', borderWidth: 2, borderRadius: 30 }]}
+                        style={[styles.toggleButton,
+                        { backgroundColor: this.props.completed == true ? 'green' : 'white' }]}
                     >
                         <Text style={[styles.textButton, { color: this.props.completed == true ? 'white' : 'black' }]}>{textValue}</Text>
                     </TouchableOpacity>
@@ -92,19 +112,11 @@ export class TaskItem extends Component {
                         {this.props.taskName}
                     </Text>
 
-
-                    <TouchableOpacity onPress={(event) => { console.log('i clicked edit'), this.onEdit() }}
-                        style={styles.editButton} >
-                        <Image
-                            style={{ width: 35, height: 30 }}
-                            source={isEdit ? require('../../icons/save.png') : require('../../icons/edit.png')}
-                            resizeMode='stretch'
-                        />
-                    </TouchableOpacity>
-
+                    {this._renderEdit()}
 
                     <TouchableOpacity onPress={(event) => { this.props.onClickDelete(this.props.taskId); }}
                         style={styles.deleteButton} >
+
                         <Image
                             style={{ width: 35, height: 30 }}
                             source={require('../../icons/PS_X.png')}
@@ -138,8 +150,8 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(toggleTask(taskId));
         },
         onClickSave: (taskId, newTaskName) => {
-           console.log('im in onclickSave'),
-            dispatch(editTask(taskId, newTaskName))
+            console.log('im in onclickSave'),
+                dispatch(editTask(taskId, newTaskName))
         }
     }
 }
@@ -161,6 +173,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 100,
         height: 30,
+        borderColor: 'green',
+        borderWidth: 2,
+        borderRadius: 30
     },
     deleteButton: {
         position: 'absolute',
@@ -182,7 +197,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         right: 50,
         marginRight: 20,
-        
+
     },
     itemStyle: {
         position: 'relative',
