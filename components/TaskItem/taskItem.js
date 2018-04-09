@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { AppRegistry, FlatList, View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import store from '../../index';
 import { deleteTask, toggleTask, editTask } from '../../reducers/actions/index'
+import taskReducers from '../../reducers/taskReducers';
 
 //to show information of each task
 export class TaskItem extends Component {
@@ -10,12 +11,14 @@ export class TaskItem extends Component {
         super(props);
     }
 
-    state = { isEdit: false, newTaskName: '',  }
+    state = { isEdit: false, newTaskName: '' }
+
     onEdit() {
         const newEditState = !this.state.isEdit;
         this.setState({ isEdit: newEditState })
     }
     
+    //render the edit button or not, depending on completed/not
     _renderEdit() {
         if (this.props.completed == false) {
             return (
@@ -32,7 +35,6 @@ export class TaskItem extends Component {
             return null
         }
     }
-
 
 
     render() {
@@ -68,8 +70,32 @@ export class TaskItem extends Component {
 
 
                     <TouchableOpacity onPress={(event) => {
-                        console.log('i clicked edit'),
-                        this.props.onClickSave(this.props.taskId, this.state.newTaskName), this.onEdit()
+                        console.log('i clicked edit')
+                      
+                        let index = this.props.tasks.findIndex(el => el.taskName == this.state.newTaskName);
+
+                        if (this.state.newTaskName.trim() == '') {
+                            return Alert.alert('Oops!','Please enter a task'); 
+                        }
+                        else if (index == -1){
+                            this.props.onClickSave(this.props.taskId, this.state.newTaskName), 
+                            this.onEdit()
+                        }
+                        else {
+                            Alert.alert('Uh-Oh', 'There is a task with the exact same name. Do you want to enter it again?', [
+                                {
+                                    text: 'Yes', onPress: () => {
+                                        console.log('Enter twice pressed'),
+                                        this.props.onClickSave(this.props.taskId, this.state.newTaskName), 
+                                        this.onEdit()
+                                        console.log(state)
+                                    }
+                                },
+                                { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                            ])
+                        }
+                      
+
                     }}
                         style={styles.editButton}
                     >
@@ -103,6 +129,7 @@ export class TaskItem extends Component {
                         <Text style={[styles.textButton, { color: this.props.completed == true ? 'white' : 'black' }]}>{textValue}</Text>
                     </TouchableOpacity>
 
+                    
 
                     <Text style={[styles.itemTextStyle, {
                         margin: 20, fontSize: 16,
@@ -116,7 +143,6 @@ export class TaskItem extends Component {
 
                     <TouchableOpacity onPress={(event) => { this.props.onClickDelete(this.props.taskId); }}
                         style={styles.deleteButton} >
-
                         <Image
                             style={{ width: 35, height: 30 }}
                             source={require('../../icons/PS_X.png')}
@@ -124,10 +150,7 @@ export class TaskItem extends Component {
                         />
                     </TouchableOpacity>
 
-
-
                 </View>)
-
 
         )
     }
@@ -137,7 +160,7 @@ export class TaskItem extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        tasks: state.taskReducers,
     }
 }
 
@@ -181,7 +204,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: '#2980b9',
         padding: 10,
         top: 10,
         bottom: 10,
@@ -191,7 +213,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: '#2980b9',
         padding: 10,
         top: 10,
         bottom: 10,

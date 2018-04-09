@@ -47,8 +47,6 @@ export default class App extends React.Component {
         
         return (
             <Provider store={store}>
-                {/* <AddTask /> */}
-                {/* <TaskListContainer /> */}
                 <TaskManager />
             </Provider>
 

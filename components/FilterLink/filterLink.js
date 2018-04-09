@@ -4,18 +4,21 @@ import { connect } from 'react-redux';
 import store from '../../index';
 import TaskItemContainer from '../TaskItem/taskItem';
 import { SET_VISIBILITY_FILTER } from '../../reducers/actions/actionTypes';
-import { VisibilityFilters, setVisibilityFilter } from '../../reducers/actions/index';
+import { setVisibilityFilter } from '../../reducers/actions/index';
 
 
 
 export class FilterLink extends Component {
     state={toggle: 'SHOW_ALL'}
+
     _onPress(filterName) {
         const newToggleState = filterName;
         this.setState({ toggle: newToggleState });
     }
 
-
+    // componentDidUpdate(){
+    //     alert('You chose ' + this.state.toggle + ' filter')
+    // }
 
     render() {
         
@@ -37,6 +40,7 @@ export class FilterLink extends Component {
                 style={this.state.toggle == 'SHOW_COMPLETED' ? styles.indiLinkActive : styles.indiLink}>
                     <Text style={this.state.toggle == 'SHOW_COMPLETED' ? styles.linkTextActive : styles.linkText}>Completed</Text>
                 </TouchableOpacity>
+
 
             </View>
         )
@@ -80,7 +84,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems:'center',
         borderRadius: 30,
-        //borderColor: 'green'
     },
     indiLink: {
         marginLeft: 10,
@@ -90,7 +93,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems:'center',
         borderRadius: 30,
-       // borderColor: 'green'
     },
 
 

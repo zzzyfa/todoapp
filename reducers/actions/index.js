@@ -3,6 +3,7 @@ import { ADD_TODO, TOGGLE_TODO, DELETE_TODO, SET_VISIBILITY_FILTER, EDIT_TODO } 
 //action creators
 let newTaskId = 0;
 
+
 export const addNewTask = (inputTaskName) => {
     console.log("Im in");
 
@@ -10,6 +11,7 @@ export const addNewTask = (inputTaskName) => {
         type: ADD_TODO,
         taskId: newTaskId++,
         taskName: inputTaskName,
+   
     }
 }
 
@@ -47,11 +49,5 @@ export const setVisibilityFilter = (filter) => {
     type: SET_VISIBILITY_FILTER,
     filter
 }
-}
-
-export const VisibilityFilters = {
-    SHOW_ALL: 'SHOW_ALL',
-    SHOW_COMPLETED: 'SHOW_COMPLETED',
-    SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
 

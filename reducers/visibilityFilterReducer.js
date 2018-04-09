@@ -1,15 +1,14 @@
 import { SET_VISIBILITY_FILTER } from './actions/actionTypes';
-import { VisibilityFilters } from './actions';
 import taskReducers from './taskReducers';
 
 
 console.log('im in VFreducer')
 
 const initState = {
-  activeFilter: 'SHOW_ACTIVE',
+  filter: 'SHOW_ALL',
 }
 
-const visibilityFilterReducer = (state = {filter:'SHOW_ALL'}, action) => {
+const visibilityFilterReducer = (state = initState, action) => {
   switch (action.type) {
     case SET_VISIBILITY_FILTER:
       console.log('change VFR', action.filter)
